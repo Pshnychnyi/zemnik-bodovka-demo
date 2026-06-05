@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zemník Bodovka — Súkromný kaprový revír</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,700;1,300;1,700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:16px}
+:root{
+  --black:#111210;
+  --dark:#1a1d17;
+  --mid:#3a4032;
+  --green:#4a6741;
+  --sage:#7a9068;
+  --light:#e8ede3;
+  --cream:#f7f5ef;
+  --white:#ffffff;
+  --gold:#b8a060;
+  --line:rgba(17,18,16,.1);
+  --line-light:rgba(255,255,255,.12);
+}
+body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--black);-webkit-font-smoothing:antialiased}
+img{display:block;max-width:100%}
+a{text-decoration:none}
+
+/* ─── HEADER ─── */
+header{
+  position:fixed;top:0;left:0;right:0;z-index:999;
+  background:rgba(26,29,23,.96);
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line-light);
+}
+.hdr{max-width:1400px;margin:0 auto;padding:0 40px;height:68px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;flex-direction:column;gap:2px}
+.logo-name{font-family:'Fraunces',serif;font-size:1.15rem;font-weight:700;color:#fff;letter-spacing:.02em}
+.logo-sub{font-size:.6rem;letter-spacing:.25em;text-transform:uppercase;color:var(--sage)}
+nav{display:flex;align-items:center;gap:8px}
+nav a{font-size:.75rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.5);padding:8px 14px;border-radius:4px;transition:all .2s}
+nav a:hover{color:#fff;background:rgba(255,255,255,.07)}
+.nav-cta{background:var(--green)!important;color:#fff!important;padding:9px 20px!important}
+.nav-cta:hover{background:#3a5432!important;opacity:1!important}
+
+/* ─── HERO ─── */
+.hero{
+  height:100vh;min-height:700px;position:relative;
+  display:flex;align-items:flex-end;
+  background:url('https://picsum.photos/id/1035/1600/900') center/cover no-repeat;
+}
+.hero::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(
+    to bottom,
+    rgba(17,18,16,.3) 0%,
+    rgba(17,18,16,.1) 40%,
+    rgba(17,18,16,.85) 100%
+  );
+}
+.hero-content{
+  position:relative;z-index:2;
+  padding:0 80px 80px;
+  max-width:900px;
+}
+.hero-tag{
+  display:inline-flex;align-items:center;gap:10px;
+  margin-bottom:24px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.15);
+  padding:6px 14px;border-radius:100px;
+}
+.hero-tag span{font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.7)}
+.hero-dot{width:5px;height:5px;border-radius:50%;background:var(--sage)}
+h1{
+  font-family:'Fraunces',serif;
+  font-size:clamp(3.5rem,6vw,6.5rem);
+  font-weight:300;line-height:1;
+  color:#fff;margin-bottom:20px;
+}
+h1 em{font-style:italic;color:var(--sage)}
+.hero-desc{font-size:1.05rem;line-height:1.7;color:rgba(255,255,255,.65);max-width:520px;margin-bottom:44px;font-weight:300}
+.hero-btns{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.btn-white{background:#fff;color:var(--black);padding:14px 32px;border-radius:6px;font-size:.85rem;font-weight:600;letter-spacing:.04em;transition:all .2s}
+.btn-white:hover{background:var(--light);transform:translateY(-1px)}
+.btn-ghost{border:1px solid rgba(255,255,255,.3);color:#fff;padding:14px 32px;border-radius:6px;font-size:.85rem;font-weight:500;letter-spacing:.04em;transition:all .2s}
+.btn-ghost:hover{border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.06)}
+.hero-scroll{position:absolute;bottom:32px;right:48px;z-index:2;display:flex;align-items:center;gap:10px;color:rgba(255,255,255,.35);font-size:.65rem;letter-spacing:.18em;text-transform:uppercase}
+.scroll-bar{width:40px;height:1px;background:rgba(255,255,255,.25);position:relative;overflow:hidden}
+.scroll-bar::after{content:'';position:absolute;left:-100%;top:0;width:100%;height:100%;background:#fff;animation:slide 2s ease-in-out infinite}
+@keyframes slide{0%{left:-100%}50%{left:100%}100%{left:100%}}
+
+/* ─── STATS ─── */
+.stats{background:var(--dark);padding:0 40px}
+.stats-in{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:repeat(5,1fr);border-top:1px solid var(--line-light)}
+.stat{padding:32px 24px;border-right:1px solid var(--line-light);text-align:center}
+.stat:last-child{border-right:none}
+.stat-n{font-family:'Fraunces',serif;font-size:2.4rem;font-weight:700;color:#fff;line-height:1;margin-bottom:6px}
+.stat-l{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.38);font-weight:400}
+
+/* ─── SECTION LAYOUT ─── */
+.sec{padding:110px 40px}
+.sec-in{max-width:1400px;margin:0 auto}
+.sec-tag{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.sec-tag-dot{width:6px;height:6px;border-radius:50%;background:var(--green)}
+.sec-tag-txt{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--green);font-weight:500}
+.sec-h{font-family:'Fraunces',serif;font-size:clamp(2.2rem,3.5vw,3.8rem);font-weight:300;line-height:1.1;color:var(--black)}
+.sec-h em{font-style:italic;color:var(--green)}
+.sec-p{font-size:1rem;line-height:1.8;color:#5a6050;font-weight:300;max-width:600px;margin-top:16px}
+
+/* ─── ABOUT ─── */
+.about-g{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start;margin-top:60px}
+.about-text p{font-size:1rem;line-height:1.85;color:#4a5440;font-weight:300;margin-bottom:18px}
+.about-photo{position:relative}
+.about-img{width:100%;height:520px;object-fit:cover;border-radius:8px;filter:brightness(.88) saturate(.85)}
+.about-badge{
+  position:absolute;bottom:28px;left:28px;
+  background:rgba(17,18,16,.85);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.1);
+  padding:16px 20px;border-radius:8px;
+  display:flex;flex-direction:column;gap:4px;
+}
+.badge-num{font-family:'Fraunces',serif;font-size:2rem;font-weight:700;color:#fff;line-height:1}
+.badge-lbl{font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+
+/* FEATURES */
+.feats{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:48px}
+.feat{background:var(--white);padding:28px 24px;border-radius:4px}
+.feat-icon{font-size:1.5rem;margin-bottom:14px}
+.feat-t{font-size:.88rem;font-weight:600;color:var(--black);margin-bottom:8px}
+.feat-p{font-size:.85rem;color:#6a7560;line-height:1.65;font-weight:300}
+
+/* ─── TIMELINE ─── */
+.tl-sec{background:var(--dark);padding:110px 40px}
+.tl-in{max-width:1400px;margin:0 auto}
+.tl-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;margin-top:60px}
+.tl-item{background:rgba(255,255,255,.04);padding:32px 24px;border-radius:4px;border-top:2px solid rgba(255,255,255,.06);transition:all .2s}
+.tl-item:hover{background:rgba(255,255,255,.08);border-top-color:var(--sage)}
+.tl-year{font-family:'Fraunces',serif;font-size:2rem;font-weight:700;color:var(--sage);margin-bottom:12px}
+.tl-txt{font-size:.85rem;color:rgba(255,255,255,.5);line-height:1.7;font-weight:300}
+
+/* ─── FISH ─── */
+.fish-sec{background:var(--cream);padding:110px 40px}
+.fish-in{max-width:1400px;margin:0 auto}
+.fish-g{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:60px}
+.fish-card{
+  background:var(--white);border-radius:8px;
+  padding:28px;border:1px solid var(--line);
+  transition:all .3s;
+}
+.fish-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(17,18,16,.08);border-color:var(--sage)}
+.fish-icon{font-size:2rem;margin-bottom:16px}
+.fish-name{font-size:.9rem;font-weight:600;color:var(--black);margin-bottom:8px}
+.fish-info{font-size:.82rem;color:#6a7560;line-height:1.65;font-weight:300}
+
+/* ─── DEPTH ─── */
+.depth-sec{
+  padding:110px 40px;
+  background:url('https://picsum.photos/id/1040/1400/800') center/cover;
+  position:relative;
+}
+.depth-sec::before{content:'';position:absolute;inset:0;background:rgba(17,18,16,.88)}
+.depth-in{max-width:1400px;margin:0 auto;position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center}
+.depth-txt .sec-h{color:#fff}
+.depth-txt .sec-h em{color:var(--sage)}
+.depth-txt p{font-size:1rem;line-height:1.8;color:rgba(255,255,255,.5);margin-top:20px;font-weight:300}
+.bars{display:flex;flex-direction:column;gap:20px}
+.bar{display:flex;flex-direction:column;gap:8px}
+.bar-top{display:flex;justify-content:space-between;align-items:center}
+.bar-label{font-size:.78rem;font-weight:500;color:rgba(255,255,255,.7);letter-spacing:.04em}
+.bar-val{font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;color:var(--sage)}
+.bar-track{height:3px;background:rgba(255,255,255,.1);border-radius:2px}
+.bar-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--green),var(--sage))}
+
+/* ─── CAROUSEL ─── */
+.carousel-sec{padding:110px 0;background:var(--white);overflow:hidden}
+.carousel-hdr{max-width:1400px;margin:0 auto 48px;padding:0 40px;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.c-nav{display:flex;align-items:center;gap:12px}
+.c-btn{
+  width:48px;height:48px;border-radius:50%;
+  background:var(--cream);border:1px solid var(--line);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  font-size:1.1rem;color:var(--black);transition:all .2s;
+}
+.c-btn:hover{background:var(--dark);color:#fff;border-color:var(--dark)}
+.c-track-wrap{overflow:hidden;padding:0 40px}
+.c-track{display:flex;gap:20px;transition:transform .6s cubic-bezier(.4,0,.2,1)}
+.c-slide{flex:0 0 380px;border-radius:10px;overflow:hidden;position:relative;height:480px}
+.c-slide img{width:100%;height:100%;object-fit:cover;transition:transform .5s;filter:brightness(.85) saturate(.8)}
+.c-slide:hover img{transform:scale(1.04)}
+.c-info{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:28px 24px;
+  background:linear-gradient(to top,rgba(17,18,16,.9) 0%,transparent 100%);
+}
+.c-weight{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:700;color:#fff;line-height:1;margin-bottom:4px}
+.c-caption{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.c-dots{display:flex;gap:6px;align-items:center}
+.c-dot{width:7px;height:7px;border-radius:50%;background:var(--line);cursor:pointer;transition:all .2s}
+.c-dot.active{background:var(--green);width:20px;border-radius:4px}
+
+/* ─── PRICING ─── */
+.price-sec{background:var(--cream);padding:110px 40px}
+.price-in{max-width:1400px;margin:0 auto}
+.price-top{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end;margin-bottom:52px}
+.price-desc{font-size:1rem;line-height:1.8;color:#5a6050;font-weight:300}
+.price-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.p-card{background:var(--white);border:1px solid var(--line);border-radius:10px;padding:32px 28px;transition:all .3s;position:relative;overflow:hidden}
+.p-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--line)}
+.p-card.featured::before{background:linear-gradient(90deg,var(--green),var(--sage))}
+.p-card:hover{transform:translateY(-4px);box-shadow:0 24px 48px rgba(17,18,16,.1)}
+.p-card.featured{border-color:var(--green)}
+.p-badge{display:inline-block;background:rgba(74,103,65,.1);color:var(--green);font-size:.62rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:100px;margin-bottom:20px}
+.p-type{font-size:.72rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#8a9080;margin-bottom:8px}
+.p-price{font-family:'Fraunces',serif;font-size:2.6rem;font-weight:700;color:var(--black);line-height:1;margin-bottom:4px}
+.p-price span{font-size:1rem;font-weight:300;color:#8a9080}
+.p-dur{font-size:.8rem;color:#8a9080;margin-bottom:28px;font-weight:300}
+.p-features{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.p-feat{font-size:.82rem;color:#5a6050;display:flex;align-items:flex-start;gap:8px;line-height:1.5;font-weight:300}
+.p-feat::before{content:'✓';color:var(--green);font-weight:700;flex-shrink:0;margin-top:1px}
+.p-btn{display:block;text-align:center;padding:12px;border-radius:6px;font-size:.8rem;font-weight:600;letter-spacing:.05em;transition:all .2s}
+.p-btn-outline{border:1px solid var(--line);color:var(--black)}
+.p-btn-outline:hover{border-color:var(--green);color:var(--green)}
+.p-btn-fill{background:var(--green);color:#fff}
+.p-btn-fill:hover{background:#3a5432}
+
+.iban-box{
+  margin-top:40px;padding:24px 32px;
+  background:var(--dark);border-radius:8px;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;
+}
+.iban-label{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.4)}
+.iban-num{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:300;color:#fff;letter-spacing:.08em}
+.iban-note{font-size:.78rem;color:rgba(255,255,255,.35);font-weight:300}
+
+/* ─── RULES ─── */
+.rules-sec{background:var(--white);padding:110px 40px}
+.rules-in{max-width:1400px;margin:0 auto}
+.rules-g{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:60px}
+.rule{background:var(--cream);padding:36px 30px;border-radius:2px;transition:all .2s}
+.rule:hover{background:var(--light)}
+.rule-n{font-family:'Fraunces',serif;font-size:3rem;font-weight:700;color:rgba(17,18,16,.06);line-height:1;margin-bottom:14px}
+.rule-t{font-size:.85rem;font-weight:600;color:var(--black);margin-bottom:10px;letter-spacing:.02em}
+.rule-p{font-size:.85rem;color:#6a7560;line-height:1.72;font-weight:300}
+
+/* ─── EKO ─── */
+.eko-sec{
+  padding:110px 40px;
+  background:url('https://picsum.photos/id/10/1400/800') center/cover;
+  position:relative;
+}
+.eko-sec::before{content:'';position:absolute;inset:0;background:rgba(26,29,23,.93)}
+.eko-in{max-width:1400px;margin:0 auto;position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.eko-txt .sec-h{color:#fff}
+.eko-txt .sec-h em{color:var(--sage)}
+.eko-txt p{font-size:1rem;line-height:1.8;color:rgba(255,255,255,.5);margin-top:20px;font-weight:300;margin-bottom:12px}
+.eko-cards{display:flex;flex-direction:column;gap:16px}
+.eko-card{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:8px;padding:28px}
+.eko-card-title{font-size:.72rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;margin-bottom:20px}
+.eko-card-title.ok{color:var(--sage)}
+.eko-card-title.nok{color:#c06040}
+.eko-list{display:flex;flex-direction:column;gap:10px}
+.eko-item{font-size:.85rem;color:rgba(255,255,255,.55);display:flex;gap:10px;line-height:1.6;font-weight:300}
+.eko-ok{color:var(--sage);font-weight:700;flex-shrink:0}
+.eko-no{color:#c06040;font-weight:700;flex-shrink:0}
+
+/* ─── CONTACT ─── */
+.contact-sec{padding:110px 40px;background:var(--cream)}
+.contact-in{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:5fr 4fr;gap:80px;align-items:start}
+.contact-items{margin-top:44px;display:flex;flex-direction:column;gap:28px}
+.ci-label{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--green);font-weight:500;margin-bottom:6px}
+.ci-val{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:300;color:var(--black)}
+.ci-val a{color:var(--black);transition:color .2s}
+.ci-val a:hover{color:var(--green)}
+.ci-val.sm{font-size:1rem;font-family:'Inter',sans-serif;font-weight:400}
+.gps{font-size:.82rem;color:#7a8070;font-weight:300;font-family:monospace;margin-top:4px}
+.contact-map{border-radius:12px;overflow:hidden;border:1px solid var(--line);height:480px}
+.contact-map iframe{width:100%;height:100%;border:none}
+.contact-btns{display:flex;gap:12px;margin-top:44px;flex-wrap:wrap}
+.btn-green{background:var(--green);color:#fff;padding:14px 28px;border-radius:6px;font-size:.85rem;font-weight:600;transition:all .2s}
+.btn-green:hover{background:#3a5432;transform:translateY(-1px)}
+.btn-outline-dark{border:1px solid var(--line);color:var(--black);padding:14px 28px;border-radius:6px;font-size:.85rem;font-weight:500;transition:all .2s}
+.btn-outline-dark:hover{border-color:var(--green);color:var(--green)}
+
+/* ─── FOOTER ─── */
+footer{background:var(--dark);padding:56px 40px}
+.footer-in{max-width:1400px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:48px;padding-bottom:48px;border-bottom:1px solid var(--line-light)}
+.footer-brand .logo-name{font-size:1.3rem;margin-bottom:8px;display:block}
+.footer-brand p{font-size:.85rem;color:rgba(255,255,255,.35);line-height:1.7;font-weight:300;max-width:280px;margin-top:12px}
+.footer-col-title{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.28);font-weight:500;margin-bottom:20px}
+.footer-links{display:flex;flex-direction:column;gap:10px}
+.footer-links a{font-size:.85rem;color:rgba(255,255,255,.45);transition:color .2s;font-weight:300}
+.footer-links a:hover{color:#fff}
+.footer-bottom{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.footer-copy{font-size:.75rem;color:rgba(255,255,255,.2)}
+.footer-fb{display:flex;align-items:center;gap:8px;font-size:.75rem;color:rgba(255,255,255,.35);transition:color .2s}
+.footer-fb:hover{color:#fff}
+
+/* ─── RESPONSIVE ─── */
+@media(max-width:1024px){
+  .about-g,.tl-grid,.depth-in,.price-top,.eko-in,.contact-in,.footer-top{grid-template-columns:1fr;gap:40px}
+  .tl-grid{grid-template-columns:repeat(2,1fr)}
+  .fish-g{grid-template-columns:repeat(2,1fr)}
+  .price-cards{grid-template-columns:repeat(2,1fr)}
+  .rules-g{grid-template-columns:repeat(2,1fr)}
+  .footer-top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .hdr{padding:0 20px}
+  nav a:not(.nav-cta){display:none}
+  .hero-content{padding:0 24px 60px}
+  .sec{padding:72px 20px}
+  .stats-in{grid-template-columns:repeat(3,1fr)}
+  .stat:nth-child(n+4){display:none}
+  .tl-grid,.fish-g,.price-cards,.rules-g,.feats{grid-template-columns:1fr}
+  .c-slide{flex:0 0 300px;height:380px}
+  .c-track-wrap{padding:0 20px}
+  .carousel-hdr{padding:0 20px}
+  .depth-in{padding:0}
+  .contact-map{height:300px}
+  footer{padding:40px 20px}
+  .footer-top{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="hdr">
+    <a class="logo" href="#">
+      <span class="logo-name">Zemník Bodovka</span>
+      <span class="logo-sub">Súkromný kaprový revír · od 1993</span>
+    </a>
+    <nav>
+      <a href="#o-jazere">Jazero</a>
+      <a href="#historia">História</a>
+      <a href="#galeria">Galéria</a>
+      <a href="#cennik">Cenník</a>
+      <a href="#pravidla">Pravidlá</a>
+      <a href="#kontakt">Kontakt</a>
+      <a href="#kontakt" class="nav-cta">Rezervovať</a>
+    </nav>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-tag">
+      <div class="hero-dot"></div>
+      <span>Catch & Release · Non-stop · Krivosúd-Bodovka</span>
+    </div>
+    <h1>Kaprový<br>revír<br><em>Bodovka.</em></h1>
+    <p class="hero-desc">Súkromné jazero s obmedzenou kapacitou pri Trenčíne. Vyhradené sektory, kapitálne kapre — rekord 27 kg. Každá ryba sa vracia späť.</p>
+    <div class="hero-btns">
+      <a href="#kontakt" class="btn-white">Rezervovať miesto</a>
+      <a href="#o-jazere" class="btn-ghost">Spoznať jazero</a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-bar"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-in">
+    <div class="stat"><div class="stat-n">1993</div><div class="stat-l">Rok vzniku</div></div>
+    <div class="stat"><div class="stat-n">2,5m</div><div class="stat-l">Priemerná hĺbka</div></div>
+    <div class="stat"><div class="stat-n">4m</div><div class="stat-l">Maximálna hĺbka</div></div>
+    <div class="stat"><div class="stat-n">27kg</div><div class="stat-l">Rekordný kapor</div></div>
+    <div class="stat"><div class="stat-n">20€</div><div class="stat-l">24-hodinová pov.</div></div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="sec" id="o-jazere">
+  <div class="sec-in">
+    <div class="sec-tag"><div class="sec-tag-dot"></div><span class="sec-tag-txt">O jazere</span></div>
+    <h2 class="sec-h">Miesto kde<br><em>príroda diktuje</em></h2>
+    <div class="about-g">
+      <div class="about-text">
+        <p>Zemník Bodovka je súkromný kaprový revír spravovaný Klubom športových rybárov Trenčín. Leží v tichom prostredí pri obci Krivosúd-Bodovka, asi 1 km smerom na obec Beckov.</p>
+        <p>Jazero vzniklo ťažbou štrku od roku 1993 a dnes ponúka pestré podmienky — od plytčín 0,5–1 m až po najhlbšie partie s 4 metrami. V letných mesiacoch je mierne zarastené vodnými rastlinami, čo vytvára ideálny úkryt pre kapitálne kapre.</p>
+        <p>Brehy sú upravené a zatrávnené, pripravené na bivak. Nájdete tu miesta na otvorený oheň a sociálne zariadenia. V blízkosti sú kultúrne pamiatky: Beckovský hrad, Trenčiansky hrad a okolité hory.</p>
+        <div class="feats" style="margin-top:40px">
+          <div class="feat"><div class="feat-icon">🎣</div><div class="feat-t">Vyhradené sektory</div><p class="feat-p">Každý rybár má pevne vymedzené lovné miesto na mape jazera.</p></div>
+          <div class="feat"><div class="feat-icon">🌙</div><div class="feat-t">Non-stop lov</div><p class="feat-p">Rybolov 24/7. Nočný bivak priamo na brehu jazera povolený.</p></div>
+          <div class="feat"><div class="feat-icon">🚤</div><div class="feat-t">Zavážanie člnom</div><p class="feat-p">Povolené elektromotor alebo veslo, sonar, bójky. Lov z člna zakázaný.</p></div>
+        </div>
+      </div>
+      <div class="about-photo">
+        <img class="about-img" alt="Rybolov Bodovka" src="https://picsum.photos/id/119/900/520">
+        <div class="about-badge">
+          <div class="badge-num">27 kg</div>
+          <div class="badge-lbl">Rekordný kapor</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HISTORIA / TIMELINE -->
+<section class="tl-sec" id="historia">
+  <div class="tl-in">
+    <div class="sec-tag"><div class="sec-tag-dot" style="background:var(--sage)"></div><span class="sec-tag-txt" style="color:var(--sage)">História jazera</span></div>
+    <h2 class="sec-h" style="color:#fff">Tridsať rokov<br><em>živej vody</em></h2>
+    <div class="tl-grid">
+      <div class="tl-item">
+        <div class="tl-year">1993</div>
+        <div class="tl-txt">Začiatok budovania — ťažba štrku, tvorba brehov z odhrnutej ornej pôdy pri Krivosúd-Bodovka.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1998</div>
+        <div class="tl-txt">Storočná povodeň — Váh sa vyliala, do jazera sa dostali kapre z rybníku Bodovka II a priamo z Váhu.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">1999</div>
+        <div class="tl-txt">Jazero preplnené malými kapríkmi všetkých druhov — lysec, šupináč, riadkový. Trávnatý raj.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2000</div>
+        <div class="tl-txt">Prvé kapre nad 10 kg. Začalo sa pravidelné zarybňovanie a profesionálne obhospodarovanie revíru.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">Rekord</div>
+        <div class="tl-txt">Najväčší zaznamenaný kapor — 27 kg. Pustený späť do jazera. Obsádka rastie každým rokom.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FISH -->
+<section class="fish-sec" id="ryby">
+  <div class="fish-in">
+    <div class="sec-tag"><div class="sec-tag-dot"></div><span class="sec-tag-txt">Obsádka jazera</span></div>
+    <h2 class="sec-h">Kto žije<br><em>pod hladinou</em></h2>
+    <div class="fish-g">
+      <div class="fish-card"><div class="fish-icon">🐟</div><div class="fish-name">Kapor rybničný</div><div class="fish-info">Hlavný druh. Lysec, šupináč, riadkový. Exempláre do 27 kg. Povinné catch & release.</div></div>
+      <div class="fish-card"><div class="fish-icon">🐠</div><div class="fish-name">Šťuka severná</div><div class="fish-info">Prítomná v jazere. Lov dravcov zakázaný — výnimka sumec po dohode so správcom.</div></div>
+      <div class="fish-card"><div class="fish-icon">🐡</div><div class="fish-name">Zubáč veľkoústy</div><div class="fish-info">Vzácny hosť. Lov len s povolením správcu jazera.</div></div>
+      <div class="fish-card"><div class="fish-icon">🦎</div><div class="fish-name">Sumec veľký</div><div class="fish-info">Lov povolený len po dohode so správcom jazera.</div></div>
+      <div class="fish-card"><div class="fish-icon">🐟</div><div class="fish-name">Úhor európsky</div><div class="fish-info">Vzácny druh prítomný v jazere. Chránený.</div></div>
+      <div class="fish-card"><div class="fish-icon">🐟</div><div class="fish-name">Karas zlatistý</div><div class="fish-info">Bežne zastúpený. Dostal sa do jazera pri povodniach z roku 1998.</div></div>
+      <div class="fish-card"><div class="fish-icon">🐟</div><div class="fish-name">Pleskáč, Ostriež</div><div class="fish-info">Menšie druhy prirodzene osídľujúce jazero po celý rok.</div></div>
+      <div class="fish-card"><div class="fish-icon">🐟</div><div class="fish-name">Červenica, Belička</div><div class="fish-info">Drobné druhy bežne prítomné v celom jazere.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- DEPTH -->
+<section class="depth-sec">
+  <div class="depth-in">
+    <div class="depth-txt">
+      <div class="sec-tag"><div class="sec-tag-dot" style="background:var(--sage)"></div><span class="sec-tag-txt" style="color:var(--sage)">Profil jazera</span></div>
+      <h2 class="sec-h">Hĺbkový<br><em>profil vody</em></h2>
+      <p>Rôznorodé podmienky pre každý štýl lovu — od plytčín po hlboké partie. V lete zarastené rastlinami — ideálny úkryt pre kapitálne kapre.</p>
+    </div>
+    <div class="bars">
+      <div class="bar">
+        <div class="bar-top"><span class="bar-label">Plytčiny</span><span class="bar-val">0,5–1 m</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:20%"></div></div>
+      </div>
+      <div class="bar">
+        <div class="bar-top"><span class="bar-label">Priemerná hĺbka</span><span class="bar-val">2,5 m</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:62%"></div></div>
+      </div>
+      <div class="bar">
+        <div class="bar-top"><span class="bar-label">Maximálna hĺbka</span><span class="bar-val">4 m</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+      </div>
+      <div class="bar">
+        <div class="bar-top"><span class="bar-label">Rekordný kapor</span><span class="bar-val">27 kg</span></div>
+        <div class="bar-track"><div class="bar-fill" style="width:85%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CAROUSEL -->
+<section class="carousel-sec" id="galeria">
+  <div class="carousel-hdr">
+    <div>
+      <div class="sec-tag"><div class="sec-tag-dot"></div><span class="sec-tag-txt">Galéria úlovkov</span></div>
+      <h2 class="sec-h">Trofeje<br><em>z Bodovky</em></h2>
+    </div>
+    <div class="c-nav">
+      <button class="c-btn" id="prev" aria-label="Späť">&#8592;</button>
+      <div class="c-dots" id="dots"></div>
+      <button class="c-btn" id="next" aria-label="Ďalej">&#8594;</button>
+    </div>
+  </div>
+  <div class="c-track-wrap">
+    <div class="c-track" id="track">
+      <div class="c-slide">
+        <img src="https://picsum.photos/id/1043/760/480" alt="Kapor">
+        <div class="c-info"><div class="c-weight">27 kg</div><div class="c-caption">Rekordný kapor · Zemník Bodovka</div></div>
+      </div>
+      <div class="c-slide">
+        <img src="https://picsum.photos/id/15/760/480" alt="Rybolov">
+        <div class="c-info"><div class="c-weight">Úsvit</div><div class="c-caption">Ranný lov pri hmle · Non-stop sezóna</div></div>
+      </div>
+      <div class="c-slide">
+        <img src="https://picsum.photos/id/24/760/480" alt="Západ slnka">
+        <div class="c-info"><div class="c-weight">Večer</div><div class="c-caption">Západ slnka nad Bodovkou</div></div>
+      </div>
+      <div class="c-slide">
+        <img src="https://picsum.photos/id/29/760/480" alt="Bivak">
+        <div class="c-info"><div class="c-weight">Bivak</div><div class="c-caption">Nočný lov priamo na brehu jazera</div></div>
+      </div>
+      <div class="c-slide">
+        <img src="https://picsum.photos/id/137/760/480" alt="Prút">
+        <div class="c-info"><div class="c-weight">15+ kg</div><div class="c-caption">Kapitálny kapor · catch &amp; release</div></div>
+      </div>
+      <div class="c-slide">
+        <img src="https://picsum.photos/id/1080/760/480" alt="Jazero">
+        <div class="c-info"><div class="c-weight">Príroda</div><div class="c-caption">Krivosúd-Bodovka · Považie</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="price-sec" id="cennik">
+  <div class="price-in">
+    <div class="price-top">
+      <div>
+        <div class="sec-tag"><div class="sec-tag-dot"></div><span class="sec-tag-txt">Cenník 2026</span></div>
+        <h2 class="sec-h">Jasné<br><em>podmienky</em></h2>
+      </div>
+      <p class="price-desc">Krátkodobé rezervácie na 1–2 dni dohodíte telefonicky so správcom. Rezervácie na 3+ dní sa prijímajú od 1. novembra. Po uhradení 50% zálohy do 5 pracovných dní je rezervácia platná.</p>
+    </div>
+    <div class="price-cards">
+      <div class="p-card">
+        <div class="p-type">Denný lov</div>
+        <div class="p-price">20 <span>€</span></div>
+        <div class="p-dur">24 hodín od zvolenej hodiny</div>
+        <div class="p-features">
+          <div class="p-feat">Non-stop lov 24/7</div>
+          <div class="p-feat">Max. 2 udice</div>
+          <div class="p-feat">Nočný bivak povolený</div>
+          <div class="p-feat">Predaj u správcu na mieste</div>
+        </div>
+        <a href="tel:+421944691482" class="p-btn p-btn-outline">Zavolať správcovi</a>
+      </div>
+      <div class="p-card featured">
+        <div class="p-badge">Najpopulárnejší</div>
+        <div class="p-type">Krátkodobý</div>
+        <div class="p-price">Na <span>výzv.</span></div>
+        <div class="p-dur">1–2 dni · telefonická dohoda</div>
+        <div class="p-features">
+          <div class="p-feat">Vyhradený sektor</div>
+          <div class="p-feat">Nočný lov povolený</div>
+          <div class="p-feat">Bivak na brehu</div>
+          <div class="p-feat">Zavážanie člnom</div>
+        </div>
+        <a href="tel:+421944691482" class="p-btn p-btn-fill">Rezervovať</a>
+      </div>
+      <div class="p-card">
+        <div class="p-type">Dlhodobý 3+ dní</div>
+        <div class="p-price">Na <span>výzv.</span></div>
+        <div class="p-dur">od 1. novembra na nasledujúci rok</div>
+        <div class="p-features">
+          <div class="p-feat">Prioritný výber sektora</div>
+          <div class="p-feat">Záloha 50% do 5 prac. dní</div>
+          <div class="p-feat">Zrušenie 10 dní vopred</div>
+          <div class="p-feat">Všetky výhody</div>
+        </div>
+        <a href="mailto:info@zemnik-bodovka.sk" class="p-btn p-btn-outline">Napísať email</a>
+      </div>
+      <div class="p-card">
+        <div class="p-type">Prenájom jazera</div>
+        <div class="p-price">Na <span>výzv.</span></div>
+        <div class="p-dur">Podujatia, firemné súťaže</div>
+        <div class="p-features">
+          <div class="p-feat">Celé jazero pre vás</div>
+          <div class="p-feat">Nahlásiť 14 dní vopred</div>
+          <div class="p-feat">Individuálne podmienky</div>
+          <div class="p-feat">Pre skupiny a firmy</div>
+        </div>
+        <a href="tel:+421944691482" class="p-btn p-btn-outline">Kontaktovať</a>
+      </div>
+    </div>
+    <div class="iban-box">
+      <div>
+        <div class="iban-label">Číslo účtu pre zálohu 50%</div>
+        <div class="iban-num">SK87 1100 0000 0029 3868 1838</div>
+      </div>
+      <div class="iban-note">Rezervácia je platná až po potvrdení zálohy · Zrušenie max. 10 dní pred začiatkom</div>
+    </div>
+  </div>
+</section>
+
+<!-- RULES -->
+<section class="rules-sec" id="pravidla">
+  <div class="rules-in">
+    <div class="sec-tag"><div class="sec-tag-dot"></div><span class="sec-tag-txt">Pravidlá rybolovu</span></div>
+    <h2 class="sec-h">Lovíme<br><em>s rešpektom</em></h2>
+    <div class="rules-g">
+      <div class="rule"><div class="rule-n">01</div><div class="rule-t">Povolenie Klubu ŠRT Trenčín</div><p class="rule-p">Vstup a lov povolený výhradne na povolenie Klubu ŠRT Trenčín. Neprenosné na inú osobu.</p></div>
+      <div class="rule"><div class="rule-n">02</div><div class="rule-t">Chyť a pusť — bez výnimky</div><p class="rule-p">Výhradne lov metódou chyť a pusť. Privlastnenie úlovku je zakázané a trestne oznámiteľné.</p></div>
+      <div class="rule"><div class="rule-n">03</div><div class="rule-t">Non-stop rybolov</div><p class="rule-p">Lov je možný nepretržite počas celej sezóny — hlavne jar a zima.</p></div>
+      <div class="rule"><div class="rule-n">04</div><div class="rule-t">Maximálne 2 udice</div><p class="rule-p">Lov na max. 2 udice s jedným náväzcom. Tretia len po dohode so správcom.</p></div>
+      <div class="rule"><div class="rule-n">05</div><div class="rule-t">Vlasce min. 0,35 mm</div><p class="rule-p">Minimálna hrúbka 0,35 mm. Pri šokovej šnúre povinný fluorocarbon líder.</p></div>
+      <div class="rule"><div class="rule-n">06</div><div class="rule-t">EKO záťaže povinné</div><p class="rule-p">Zakázané odpadávajúce olová. Povinné inline olovo alebo EKO záťaže od správcu.</p></div>
+      <div class="rule"><div class="rule-n">07</div><div class="rule-t">Back Lead + protihrot</div><p class="rule-p">Povinné Back Lead (spätné olovo) a háčik s protihrotom pri každom love.</p></div>
+      <div class="rule"><div class="rule-n">08</div><div class="rule-t">Podložka a podberák</div><p class="rule-p">Veľký podberák + mokrá podložka s vaničkou povinné. Možnosť požičania u správcu.</p></div>
+      <div class="rule"><div class="rule-n">09</div><div class="rule-t">Kapor 15+ kg — hlásiť</div><p class="rule-p">Kapra nad 15 kg je povinné hlásiť správcovi. Foto len nad podložkou, rybu rýchlo vrátiť.</p></div>
+      <div class="rule"><div class="rule-n">10</div><div class="rule-t">Zákaz dravcov</div><p class="rule-p">Lov dravcov zakázaný s výnimkou sumca — len po dohode. Feeder zakázaný.</p></div>
+      <div class="rule"><div class="rule-n">11</div><div class="rule-t">Zavážanie člnom</div><p class="rule-p">Elektromotor alebo veslo. Sonar a bójky povolené. Lov z člna a ostrova zakázaný.</p></div>
+      <div class="rule"><div class="rule-n">12</div><div class="rule-t">Čistota a ticho</div><p class="rule-p">Všetky odpadky odniesť. Hluk zakázaný. Šampóny a ekologické mydlá prísne zakázané.</p></div>
+    </div>
+    <p style="margin-top:24px;font-size:.82rem;color:#8a9080">Úplný zoznam 25 pravidiel: <a href="https://www.zemnik-bodovka.sk/pravidla-rybolovu" style="color:var(--green)">zemnik-bodovka.sk/pravidla-rybolovu</a></p>
+  </div>
+</section>
+
+<!-- EKO -->
+<section class="eko-sec">
+  <div class="eko-in">
+    <div class="eko-txt">
+      <div class="sec-tag"><div class="sec-tag-dot" style="background:var(--sage)"></div><span class="sec-tag-txt" style="color:var(--sage)">EKO montáže</span></div>
+      <h2 class="sec-h">Ochrana<br><em>prírody</em></h2>
+      <p>S okamžitou platnosťou sú povolené len EKO-koncové montáže. Olovo len inline — silón musí ísť stredom, aby neodpadlo.</p>
+      <p>EKO záťaže si môžete zakúpiť alebo zapožičať priamo u správcu jazera. Veríme, že každý malý krok pomáha chrániť naše jazero pre ďalšie generácie.</p>
+    </div>
+    <div class="eko-cards">
+      <div class="eko-card">
+        <div class="eko-card-title ok">✓ Povolené montáže</div>
+        <div class="eko-list">
+          <div class="eko-item"><span class="eko-ok">✓</span>Inline olovo — silón prechádza stredom</div>
+          <div class="eko-item"><span class="eko-ok">✓</span>EKO záťaže (k dispozícii u správcu)</div>
+          <div class="eko-item"><span class="eko-ok">✓</span>Kameň ako náhrada záťaže</div>
+          <div class="eko-item"><span class="eko-ok">✓</span>Back Lead — povinné pri každom love</div>
+          <div class="eko-item"><span class="eko-ok">✓</span>Háčik s protihrotom — povinný</div>
+        </div>
+      </div>
+      <div class="eko-card">
+        <div class="eko-card-title nok">✗ Zakázané montáže</div>
+        <div class="eko-list">
+          <div class="eko-item"><span class="eko-no">✗</span>Olová zavesené na klipy (odpadávajúce)</div>
+          <div class="eko-item"><span class="eko-no">✗</span>Šoková šnúra bez fluorocarbon lídera</div>
+          <div class="eko-item"><span class="eko-no">✗</span>Háčik bez protihrotu</div>
+          <div class="eko-item"><span class="eko-no">✗</span>Feeder a plávaná (výnimka: bič pre deti)</div>
+          <div class="eko-item"><span class="eko-no">✗</span>Partikl (okrem repky)</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-sec" id="kontakt">
+  <div class="contact-in">
+    <div>
+      <div class="sec-tag"><div class="sec-tag-dot"></div><span class="sec-tag-txt">Kontakt & Rezervácia</span></div>
+      <h2 class="sec-h">Nájdite<br><em>nás</em></h2>
+      <div class="contact-items">
+        <div>
+          <div class="ci-label">Lokalita</div>
+          <div class="ci-val sm">Krivosúd-Bodovka, okr. Trenčín<br>~1 km smerom na obec Beckov</div>
+        </div>
+        <div>
+          <div class="ci-label">Správca jazera</div>
+          <div class="ci-val"><a href="tel:+421944691482">+421 944 691 482</a></div>
+        </div>
+        <div>
+          <div class="ci-label">Predaj povoleniek</div>
+          <div class="ci-val"><a href="tel:+421907094394">+421 907 094 394</a></div>
+        </div>
+        <div>
+          <div class="ci-label">E-mail</div>
+          <div class="ci-val sm"><a href="mailto:info@zemnik-bodovka.sk">info@zemnik-bodovka.sk</a></div>
+        </div>
+        <div>
+          <div class="ci-label">GPS súradnice</div>
+          <div class="gps">48.8118826674261, 17.922121604070263</div>
+        </div>
+      </div>
+      <div class="contact-btns">
+        <a href="https://goo.gl/maps/haSE95wDGVqth8Vv8" class="btn-green">Navigovať →</a>
+        <a href="https://www.zemnik-bodovka.sk/rezervácie-2024" class="btn-outline-dark">Voľné termíny</a>
+      </div>
+    </div>
+    <div class="contact-map">
+      <iframe
+        src="https://maps.google.com/maps?q=48.8118826674261,17.922121604070263&z=14&output=embed"
+        allowfullscreen loading="lazy">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-in">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <span class="logo-name">Zemník Bodovka</span>
+        <p>Súkromný kaprový revír pri Trenčíne. Catch & Release od roku 1993. Klub športových rybárov Trenčín.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Navigácia</div>
+        <div class="footer-links">
+          <a href="#o-jazere">O jazere</a>
+          <a href="#historia">História</a>
+          <a href="#ryby">Obsádka</a>
+          <a href="#galeria">Galéria</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Informácie</div>
+        <div class="footer-links">
+          <a href="#cennik">Cenník</a>
+          <a href="#pravidla">Pravidlá</a>
+          <a href="#kontakt">Kontakt</a>
+          <a href="https://www.zemnik-bodovka.sk/tlacivo">Tlačivo 2%</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Kontakt</div>
+        <div class="footer-links">
+          <a href="tel:+421944691482">+421 944 691 482</a>
+          <a href="tel:+421907094394">+421 907 094 394</a>
+          <a href="mailto:info@zemnik-bodovka.sk">info@zemnik-bodovka.sk</a>
+          <a href="https://www.facebook.com/ZemnikBodovka/">Facebook</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Klub ŠRT Trenčín · Zemník Bodovka · Krivosúd-Bodovka</span>
+      <a href="https://www.facebook.com/ZemnikBodovka/" class="footer-fb">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+        ZemnikBodovka
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- CAROUSEL SCRIPT -->
+<script>
+(function(){
+  const track = document.getElementById('track');
+  const dotsEl = document.getElementById('dots');
+  const slides = Array.from(track.querySelectorAll('.c-slide'));
+  let cur = 0, timer;
+
+  const perView = () => window.innerWidth < 768 ? 1 : window.innerWidth < 1200 ? 2 : 3;
+  const gap = 20;
+  const slideW = () => slides[0].offsetWidth + gap;
+  const maxIdx = () => Math.max(0, slides.length - perView());
+
+  // Build dots
+  slides.forEach((_, i) => {
+    const d = document.createElement('button');
+    d.className = 'c-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'Slide ' + (i+1));
+    d.onclick = () => go(i);
+    dotsEl.appendChild(d);
+  });
+
+  function go(n) {
+    cur = Math.max(0, Math.min(n, maxIdx()));
+    track.style.transform = `translateX(-${cur * slideW()}px)`;
+    dotsEl.querySelectorAll('.c-dot').forEach((d,i) => d.classList.toggle('active', i === cur));
+    resetTimer();
+  }
+
+  function resetTimer() {
+    clearInterval(timer);
+    timer = setInterval(() => go(cur >= maxIdx() ? 0 : cur + 1), 4000);
+  }
+
+  document.getElementById('prev').onclick = () => go(cur - 1);
+  document.getElementById('next').onclick = () => go(cur + 1);
+
+  // Touch/swipe
+  let startX = 0;
+  track.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, {passive:true});
+  track.addEventListener('touchend', e => {
+    const diff = startX - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) go(diff > 0 ? cur + 1 : cur - 1);
+  });
+
+  window.addEventListener('resize', () => go(Math.min(cur, maxIdx())));
+  resetTimer();
+})();
+</script>
+
+</body>
+</html>
